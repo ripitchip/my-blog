@@ -189,49 +189,195 @@ article code .diff.add:before {
   color: #3dd68c;
 }
 
-pre:has(code) {
-  position: relative;
+h3 code {
+  @apply !text-lg md:!text-xl;
 }
 
-pre button.copy {
-  position: absolute;
-  right: 16px;
-  top: 16px;
-  height: 28px;
-  width: 28px;
-  padding: 0;
+pre {
+  @apply !px-0 rounded-lg;
+}
+
+code {
+  @apply text-sm md:text-base !leading-loose;
+}
+
+pre > code {
+  counter-reset: line;
+}
+
+code[data-theme*=" "],
+code[data-theme*=" "] span {
+  color: var(--shiki-light);
+  background-color: var(--shiki-light-bg);
+}
+
+@media (prefers-color-scheme: dark) {
+  code[data-theme*=" "],
+  code[data-theme*=" "] span {
+    color: var(--shiki-dark);
+    background-color: var(--shiki-dark-bg);
+  }
+}
+
+code[data-line-numbers] {
+  counter-reset: line;
+}
+
+code[data-line-numbers] > [data-line]::before {
+  counter-increment: line;
+  content: counter(line);
+  @apply inline-block w-4 mr-4 text-right text-gray-500;
+}
+
+.prose {
+  @apply max-w-[70rem] sm:text-sm md:text-base !leading-6 sm:!leading-7;
+  /* max-w-[70rem]; */
+}
+pre [data-line] {
+  @apply px-4 border-l-2 border-l-transparent;
+}
+
+[data-highlighted-line] {
+  background: rgba(200, 200, 255, 0.1);
+  @apply border-l-blue-400;
+}
+
+[data-highlighted-chars] {
+  @apply bg-zinc-600/50 rounded;
+  box-shadow: 0 0 0 4px rgb(82 82 91 / 0.5);
+}
+
+[data-chars-id] {
+  @apply shadow-none p-1 border-b-2;
+}
+
+[data-chars-id] span {
+  @apply !text-inherit;
+}
+
+[data-chars-id="v"] {
+  @apply !text-pink-300 bg-rose-800/50 border-b-pink-600 font-bold;
+}
+
+[data-chars-id="s"] {
+  @apply !text-yellow-300 bg-yellow-800/50 border-b-yellow-600 font-bold;
+}
+
+[data-chars-id="i"] {
+  @apply !text-purple-200 bg-purple-800/50 border-b-purple-600 font-bold;
+}
+
+[data-rehype-pretty-code-title] {
+  @apply bg-zinc-700 text-zinc-200 rounded-t-lg py-2 px-3 font-semibold text-sm;
+}
+
+figcaption + pre {
+  @apply !rounded-t-none;
+}
+
+figure {
+  @apply mb-6 mt-1;
+}
+pre,
+code,
+figure {
+  @apply overflow-x-auto px-2 py-1;
+}
+/* p { */
+/*   @apply text-xl; */
+/* } */
+
+.rehype-pretty-copy {
+  background: none;
+  border: none;
+  outline: none;
+  padding: 0; /* Optional: to remove any default padding */
+  margin: 0; /* Optional: to remove any default margin */
+  box-shadow: none; /* Optional: to remove any default box shadow */
+  cursor: pointer; /* Optional: to keep the pointer cursor */
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --github-alert-default-color: rgb(48, 54, 61);
+    --github-alert-note-color: rgb(31, 111, 235);
+    --github-alert-tip-color: rgb(35, 134, 54);
+    --github-alert-important-color: rgb(137, 87, 229);
+    --github-alert-warning-color: rgb(158, 106, 3);
+    --github-alert-caution-color: rgb(248, 81, 73);
+  }
+}
+
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  border-left: 0.25em solid var(--github-alert-default-color);
+}
+
+.markdown-alert > :first-child {
+  margin-top: 0;
+}
+
+.markdown-alert > :last-child {
+  margin-bottom: 0;
+}
+
+.markdown-alert-note {
+  border-left-color: var(--github-alert-note-color);
+}
+
+.markdown-alert-tip {
+  border-left-color: var(--github-alert-tip-color);
+}
+
+.markdown-alert-important {
+  border-left-color: var(--github-alert-important-color);
+}
+
+.markdown-alert-warning {
+  border-left-color: var(--github-alert-warning-color);
+}
+
+.markdown-alert-caution {
+  border-left-color: var(--github-alert-caution-color);
+}
+
+.markdown-alert-title {
   display: flex;
-  background-color: transparent; /* Ensures no background color is applied */
-  border: none; /* Removes any border */
-  outline: none; /* Removes the focus outline */
-  box-shadow: none;
-
-  & span {
-    width: 100%;
-    aspect-ratio: 1 / 1;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-  }
-
-  & .ready {
-    background-image: url(/icons/copy.svg);
-  }
-
-  & .success {
-    display: none;
-    background-image: url(/icons/clipboard.svg);
-    background-color: transparent; /* Ensures no background color is applied */
-  }
-
-  &.copied {
-    & .success {
-      display: block;
-    }
-
-    & .ready {
-      display: none;
-    }
-  }
+  margin-bottom: 4px;
+  align-items: center;
 }
 
+.markdown-alert-title > svg {
+  margin-right: 8px;
+}
+
+.markdown-alert-note .markdown-alert-title {
+  color: var(--github-alert-note-color);
+}
+
+.markdown-alert-tip .markdown-alert-title {
+  color: var(--github-alert-tip-color);
+}
+
+.markdown-alert-important .markdown-alert-title {
+  color: var(--github-alert-important-color);
+}
+
+.markdown-alert-warning .markdown-alert-title {
+  color: var(--github-alert-warning-color);
+}
+
+.markdown-alert-caution .markdown-alert-title {
+  color: var(--github-alert-caution-color);
+}
+
+:root {
+  --icon-color: black; /* Default to black (for light theme) */
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --icon-color: white; /* Switch to white for dark theme */
+  }
+}
